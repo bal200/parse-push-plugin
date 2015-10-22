@@ -3,6 +3,14 @@ Phonegap Parse.com Plugin
 
 Phonegap 3.0.0 plugin for Parse.com push service
 
+Update October-2015 - bal200:
+This fork of phonegap parse plugin was created because I need the success and error callbacks to be
+properly implemented.  The other versions just call the success callback straight away, even though
+the parse action continues on a seperate thread.  I needed the app to wait until the save to Parse
+had completed before the Success (or fail) was called.  This is because I'm making other calls to Parse
+through the JS api also, and need to ensure one thing is done at a time.
+
+
 Using [Parse.com's](http://parse.com) REST API for push requires the installation id, which isn't available in JS
 
 This plugin exposes the four native Android API push services to JS:
@@ -17,8 +25,8 @@ Installation
 Pick one of these two commands:
 
 ```
-phonegap local plugin add https://github.com/benjie/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
-cordova plugin add https://github.com/benjie/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
+phonegap local plugin add https://github.com/bal200/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
+cordova plugin add https://github.com/bal200/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
 ```
 
 Initial Setup

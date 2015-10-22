@@ -23,10 +23,13 @@
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
           <service android:name="com.parse.PushService" />
-          <receiver android:name="com.parse.ParseBroadcastReceiver">
+          <receiver android:name="com.parse.ParseBroadcastReceiver" android:exported="false">
             <intent-filter>
               <action android:name="android.intent.action.BOOT_COMPLETED" />
               <action android:name="android.intent.action.USER_PRESENT" />
+              <action android:name="com.parse.push.intent.RECEIVE" />
+              <action android:name="com.parse.push.intent.OPEN" />
+              <action android:name="com.parse.push.intent.DELETE" />
             </intent-filter>
           </receiver>
           <receiver android:name="com.parse.GcmBroadcastReceiver"
