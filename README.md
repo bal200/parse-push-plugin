@@ -6,17 +6,20 @@ Parse.Push plugin for Cordova/Phonegap/ionic. Works for both hosted Parse.com an
 
 ## Highlights
 
+#### Update: This version now uses Firebase Cloud Message (FCM) instead of Google Cloud Messenging (FCM) on Android.
+
 #### Works with [Parse.com](https://parse.com) and [parse-server](https://github.com/ParsePlatform/parse-server)
 
-#### Supports Android and iOs 8, 9, 10
+#### Supports Android 9 and iOs 8, 9, 10
 
 #### Handles cold start out-of-the-box
 
 #### Simple Setup
 
-   1. `cordova plugin add https://github.com/taivo/parse-push-plugin`
+   1. `cordova plugin add https://github.com/bal200/parse-push-plugin`
    2. Set app id, server URL, and keys as `config.xml` `preference` tags.
-   3. Done! No fuss with Objective C, AndroidManifest, or Java
+   3. For Android: Get `google-services.json` from your Firebase console, and put in your projects root.
+   4. Done! No fuss with Objective C, AndroidManifest, or Java
 
 #### Simple API
 

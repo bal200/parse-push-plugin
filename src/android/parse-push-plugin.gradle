@@ -6,9 +6,9 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
 
-    // dependencies {
-    //     classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
-    // }
+    dependencies {
+      classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
+    }
 }
 
 allprojects {
@@ -24,5 +24,6 @@ ext.postBuildExtras = {
     apply plugin: 'com.google.gms.google-services'
 }
 
-
+// you may have to manually add google services:
+// classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
 
