@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-      classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
+      classpath 'com.google.gms:google-services:4.3.3'  // Google Services plugin
     }
 }
 
@@ -20,10 +20,8 @@ allprojects {
     }
 }
 
-ext.postBuildExtras = {
+subprojects {
     apply plugin: 'com.google.gms.google-services'
 }
 
-// you may have to manually add google services:
-// classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
 
