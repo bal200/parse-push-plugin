@@ -6,7 +6,7 @@ Parse.Push plugin for Cordova/Phonegap/ionic. Works for both hosted Parse.com an
 
 ## Highlights
 
-#### Update: This version now uses Firebase Cloud Message (FCM) instead of Google Cloud Messenging (FCM) on Android.
+#### Update: This version now uses Firebase Cloud Message (FCM) instead of Google Cloud Messenging (GCM) on Android.
 
 #### Works with [Parse.com](https://parse.com) and [parse-server](https://github.com/ParsePlatform/parse-server)
 
