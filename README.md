@@ -159,23 +159,6 @@ Create the following tags in `config.xml`:
    <preference name="ParseMultiNotifications" value="true" />
    ```
 
-   - For legacy Parse.com
-
-   ```xml
-   <preference name="ParseAppId" value="your-parse-app-id" />
-   <preference name="ParseClientKey" value="your-parse-client-key" />
-
-   <!-- Do not replace this string value. It must be "PARSE_DOT_COM"-->
-   <preference name="ParseServerUrl" value="PARSE_DOT_COM" />
-
-   <!-- As standard, this plugin only shows the most recent PN in 
-      the android notifications tray along with a count of unopened
-      PNs. If you would like to override this behaviour and show all
-      PNs in the tray, then add this preference. 
-      If not, skip this preference -->
-   <preference name="ParseMultiNotifications" value="true" />
-   ```
-
 You're all set. The plugin takes care of initializing Parse platform using the `config.xml` preferences mentioned above. It also saves your installation to the database automatically.
 
 To customize push notifications, initialize Parse platform yourself, or use your own `MainApplication.java` in Android, see the [Advanced Configuration](#advanced-configuration) section.

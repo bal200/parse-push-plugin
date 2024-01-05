@@ -5,10 +5,6 @@ buildscript {
         mavenCentral()
         maven { url "https://jitpack.io" }
     }
-
-    dependencies {
-      classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
-    }
 }
 
 allprojects {
@@ -19,9 +15,4 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
-
-subprojects {
-    apply plugin: 'com.google.gms.google-services'
-}
-
 

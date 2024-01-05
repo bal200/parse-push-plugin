@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin xmlns="http://www.apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="parse-push-plugin" version="1.1.0">
+<plugin xmlns="http://www.apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="parse-push-plugin" version="1.2.0">
    <name>ParsePushPlugin</name>
    <description>Parse.Push plugin for phonegap/cordova/ionic framework</description>
 	<keywords>cordova,phonegap,ionic framework, parse server, parse push, push notification</keywords>
@@ -18,26 +18,19 @@
       <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
          <service android:exported="true" android:name="com.parse.fcm.ParseFirebaseInstanceIdService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+               <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
          </service>
          <service android:exported="true" android:name="com.parse.fcm.ParseFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+               <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
          </service>
-         <!-- <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
+         <receiver android:name="github.taivo.parsepushplugin.ParsePushPluginReceiver" android:exported="false">
             <intent-filter>
                <action android:name="com.parse.push.intent.RECEIVE" />
                <action android:name="com.parse.push.intent.DELETE" />
                <action android:name="com.parse.push.intent.OPEN" />
-            </intent-filter>
-         </receiver> -->
-         <receiver android:name="github.taivo.parsepushplugin.ParsePushPluginReceiver" android:exported="false">
-            <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
          </receiver>
       </config-file>
@@ -45,11 +38,16 @@
          <uses-permission android:name="android.permission.INTERNET" />
          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
          <uses-permission android:name="android.permission.VIBRATE" />
-         <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+      </config-file>
+      
+      <config-file target="config.xml" parent="/*">
+         <preference name="GradlePluginGoogleServicesEnabled" value="true"/>
+         <preference name="GradlePluginGoogleServicesVersion" value="4.3.15"/>
       </config-file>
 
-      <framework src="com.github.parse-community.Parse-SDK-Android:parse:1.18.5" />
-      <framework src="com.github.parse-community.Parse-SDK-Android:fcm:1.18.5" />
+      <framework src="com.github.parse-community.Parse-SDK-Android:parse:4.2.1" />
+      <framework src="com.github.parse-community.Parse-SDK-Android:fcm:4.2.1" />
+
       <framework src="me.leolin:ShortcutBadger:1.1.17@aar" />
       
       <framework src="src/android/parse-push-plugin.gradle" custom="true" type="gradleReference" />

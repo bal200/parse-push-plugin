@@ -77,8 +77,6 @@ public class ParsePushApplication extends Application {
         );
       }
 
-      //Log.d(LOGTAG, ParseInstallation.getCurrentInstallation().get("deviceToken").toString());
-
       Log.d(LOGTAG, "Saving Installation in background");
       //
       // save installation. Parse.Push will need this to push to the correct device
