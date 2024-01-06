@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin xmlns="http://www.apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="parse-push-plugin" version="1.2.0">
+<plugin xmlns="http://www.apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="parse-push-plugin" version="1.2.1">
    <name>ParsePushPlugin</name>
    <description>Parse.Push plugin for phonegap/cordova/ionic framework</description>
 	<keywords>cordova,phonegap,ionic framework, parse server, parse push, push notification</keywords>
@@ -95,7 +95,14 @@
       <framework src="libz.tbd" />
       <framework src="libsqlite3.tbd" />
       <framework src="src/ios/Frameworks/Parse.framework" custom="true" />
-      <framework src="src/ios/Frameworks/Bolts.framework" custom="true" />
+      <podspec>
+         <config>
+            <source url="https://github.com/CocoaPods/Specs.git"/>
+         </config>
+         <pods use-frameworks="true">
+            <pod name="Bolts" git="https://github.com/BoltsFramework/Bolts-ObjC" branch="main" />
+         </pods>
+      </podspec>  
    </platform>
 
    <platform name="windows">
