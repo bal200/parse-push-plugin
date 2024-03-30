@@ -59,14 +59,14 @@ module.exports = function (context) {
       return false;
     }
 
-    // var manifestGcmIdNode = applicationNode.find('meta-data[@android:name="com.parse.push.gcm_sender_id"]');
+    var manifestGcmIdNode = applicationNode.find('meta-data[@android:name="com.parse.push.gcm_sender_id"]');
 
-    // if (!manifestGcmIdNode) {
-    //   manifestGcmIdNode = new ET.Element('meta-data', { 'android:name': 'com.parse.push.gcm_sender_id' });
-    //   applicationNode.append(manifestGcmIdNode);
-    // }
+    if (!manifestGcmIdNode) {
+      manifestGcmIdNode = new ET.Element('meta-data', { 'android:name': 'com.parse.push.gcm_sender_id' });
+      applicationNode.append(manifestGcmIdNode);
+    }
 
-    // manifestGcmIdNode.set('android:value', 'id:' + configXmlGcmIdNode.get('value'));
+    manifestGcmIdNode.set('android:value', configXmlGcmIdNode.get('value'));
   }
 
 

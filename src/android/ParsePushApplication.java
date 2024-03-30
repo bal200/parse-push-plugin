@@ -80,7 +80,8 @@ public class ParsePushApplication extends Application {
       Log.d(LOGTAG, "Saving Installation in background");
       //
       // save installation. Parse.Push will need this to push to the correct device
-      ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+      ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+      installation.saveInBackground(new SaveCallback() {
         @Override
         public void done(ParseException ex) {
           if (null != ex) {

@@ -123,11 +123,24 @@ public class ParsePushPlugin extends CordovaPlugin {
     callbackContext.success();
   }
 
+  private CallbackContext registerPNCallbackContext = null;
+
   private void registerDeviceForPN(final CallbackContext callbackContext) {
-    //
-    // just a stub to keep API consistent with iOS.
-    // Device registration is automatically done by the Parse SDK for Android
+
+    if (!cordova.hasPermission(android.Manifest.permission.POST_NOTIFICATIONS)) {
+      registerPNCallbackContext = callbackContext;
+      cordova.requestPermission(this, 0, android.Manifest.permission.POST_NOTIFICATIONS);
+    }
     callbackContext.success();
+  }
+
+  @Override
+  public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults)
+      throws JSONException {
+    if (registerPNCallbackContext != null) {
+      registerPNCallbackContext.success(permissions[0]);
+      registerPNCallbackContext = null;
+    }
   }
 
   /*

@@ -94,7 +94,7 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
               
               Intent activityIntent = new Intent(context, getActivity(context, intent));
 
-              PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+              PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
               NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, id)
                     .setSmallIcon(getSmallIconId(context, intent))
                     .setBadgeIconType(getSmallIconId(context, intent))
@@ -186,9 +186,9 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
     }
 
     PendingIntent contentIntent = PendingIntent.getBroadcast(context, contentIntentRequestCode, cIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     PendingIntent deleteIntent = PendingIntent.getBroadcast(context, deleteIntentRequestCode, dIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
     NotificationCompat.Builder builder;
 
