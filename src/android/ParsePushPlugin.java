@@ -130,15 +130,21 @@ public class ParsePushPlugin extends CordovaPlugin {
     if (!cordova.hasPermission(android.Manifest.permission.POST_NOTIFICATIONS)) {
       registerPNCallbackContext = callbackContext;
       cordova.requestPermission(this, 0, android.Manifest.permission.POST_NOTIFICATIONS);
+    } else {
+      callbackContext.success();
     }
-    callbackContext.success();
   }
 
   @Override
   public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults)
       throws JSONException {
-    if (registerPNCallbackContext != null) {
-      registerPNCallbackContext.success(permissions[0]);
+    if (registerPNCallbackContext != null && permissions.length > 0
+        && permissions[0].equals(android.Manifest.permission.POST_NOTIFICATIONS)) {
+      if (grantResults[0] == 0) {
+        registerPNCallbackContext.success(permissions[0]);
+      } else {
+        registerPNCallbackContext.error("POST_NOTIFICATIONS permission denied");
+      }
       registerPNCallbackContext = null;
     }
   }
