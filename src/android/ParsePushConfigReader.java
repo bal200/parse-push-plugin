@@ -67,6 +67,11 @@ public final class ParsePushConfigReader {
     return configs.get(parseClientKeyKey);
   }
 
+  public Boolean getParseAlwaysTrayNotification() {
+    String str = configs.get("ParseAlwaysTrayNotification");
+    return (str != null && !str.isEmpty() && str.equals("true"));
+  }
+
   public String get(String key) {
     return configs.get(key);
   }

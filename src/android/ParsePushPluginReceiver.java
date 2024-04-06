@@ -50,7 +50,9 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
 
   @Override
   protected void onPushReceive(Context context, Intent intent) {
-    if (ParsePushPlugin.isInForeground()) {
+    ParsePushConfigReader config = new ParsePushConfigReader(context, null, new String[] { "ParseAlwaysTrayNotification" });
+
+    if (ParsePushPlugin.isInForeground() && !config.getParseAlwaysTrayNotification()) {
       //
       // relay the push notification data to the javascript
       ParsePushPlugin.jsCallback(getPushData(intent));
@@ -61,7 +63,7 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
       //
       // So first we check if the user has set the configuration to have multiple
       // notifications show in the tray (i.e. set <preference name="ParseMultiNotifications" value="true" />)
-      ParsePushConfigReader config = new ParsePushConfigReader(context, null,
+      config = new ParsePushConfigReader(context, null,
           new String[] { "ParseMultiNotifications" });
       String parseMulti = config.get("ParseMultiNotifications");
       if (parseMulti != null && !parseMulti.isEmpty() && parseMulti.equals("true")) {
