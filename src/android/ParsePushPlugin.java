@@ -18,6 +18,7 @@ import com.parse.Parse;
 import com.parse.ParsePush;
 import com.parse.ParseInstallation;
 
+import android.os.Build;
 import android.util.Log;
 
 public class ParsePushPlugin extends CordovaPlugin {
@@ -126,10 +127,14 @@ public class ParsePushPlugin extends CordovaPlugin {
   private CallbackContext registerPNCallbackContext = null;
 
   private void registerDeviceForPN(final CallbackContext callbackContext) {
-
-    if (!cordova.hasPermission(android.Manifest.permission.POST_NOTIFICATIONS)) {
-      registerPNCallbackContext = callbackContext;
-      cordova.requestPermission(this, 0, android.Manifest.permission.POST_NOTIFICATIONS);
+    // This is only necessary for API level >= 33 (TIRAMISU)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      if (!cordova.hasPermission(android.Manifest.permission.POST_NOTIFICATIONS)) {
+        registerPNCallbackContext = callbackContext;
+        cordova.requestPermission(this, 0, android.Manifest.permission.POST_NOTIFICATIONS);
+      } else {
+        callbackContext.success();
+      }
     } else {
       callbackContext.success();
     }
