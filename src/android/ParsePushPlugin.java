@@ -18,7 +18,6 @@ import com.parse.Parse;
 import com.parse.ParsePush;
 import com.parse.ParseInstallation;
 
-import android.os.Build;
 import android.util.Log;
 
 public class ParsePushPlugin extends CordovaPlugin {
@@ -124,33 +123,11 @@ public class ParsePushPlugin extends CordovaPlugin {
     callbackContext.success();
   }
 
-  private CallbackContext registerPNCallbackContext = null;
-
   private void registerDeviceForPN(final CallbackContext callbackContext) {
-    // This is only necessary for API level >= 33 (TIRAMISU)
-    if (
-      Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-      && !cordova.hasPermission(android.Manifest.permission.POST_NOTIFICATIONS)
-    ) {
-      registerPNCallbackContext = callbackContext;
-      cordova.requestPermission(this, 0, android.Manifest.permission.POST_NOTIFICATIONS);
-    } else {
-      callbackContext.success();
-    }
-  }
-
-  @Override
-  public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults)
-      throws JSONException {
-    if (registerPNCallbackContext != null && permissions.length > 0
-        && permissions[0].equals(android.Manifest.permission.POST_NOTIFICATIONS)) {
-      if (grantResults[0] == 0) {
-        registerPNCallbackContext.success(permissions[0]);
-      } else {
-        registerPNCallbackContext.error("POST_NOTIFICATIONS permission denied");
-      }
-      registerPNCallbackContext = null;
-    }
+    //
+    // just a stub to keep API consistent with iOS.
+    // Device registration is automatically done by the Parse SDK for Android
+    callbackContext.success();
   }
 
   /*
