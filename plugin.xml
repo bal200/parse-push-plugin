@@ -16,12 +16,7 @@
          </feature>
       </config-file>
       <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
-         <service android:exported="true" android:name="com.parse.fcm.ParseFirebaseInstanceIdService">
-            <intent-filter>
-               <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-         </service>
-         <service android:exported="true" android:name="com.parse.fcm.ParseFirebaseMessagingService">
+         <service android:exported="false" android:name="com.parse.fcm.ParseFirebaseMessagingService">
             <intent-filter>
                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -38,7 +33,6 @@
          <uses-permission android:name="android.permission.INTERNET" />
          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
          <uses-permission android:name="android.permission.VIBRATE" />
-         <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
       </config-file>
       
       <config-file target="config.xml" parent="/*">

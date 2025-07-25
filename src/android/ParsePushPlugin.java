@@ -17,6 +17,9 @@ import org.json.JSONException;
 import com.parse.Parse;
 import com.parse.ParsePush;
 import com.parse.ParseInstallation;
+import com.parse.ParseGeoPoint;
+import com.parse.SaveCallback;
+import com.parse.ParseException;
 
 import android.os.Build;
 import android.util.Log;
@@ -80,6 +83,18 @@ public class ParsePushPlugin extends CordovaPlugin {
       this.registerDeviceForPN(callbackContext);
       return true;
     }
+    if (action.equals("getLocation")) {
+      this.getLocation(callbackContext);
+      return true;
+    }
+    if (action.equals("setLocation")) {
+      this.setLocation(args.getDouble(0), args.getDouble(1), callbackContext);
+      return true;
+    }
+    if (action.equals("getDeviceToken")) {
+      this.getDeviceToken(callbackContext);
+      return true;
+    }
     return false;
   }
 
@@ -97,6 +112,50 @@ public class ParsePushPlugin extends CordovaPlugin {
       public void run() {
         String objectId = ParseInstallation.getCurrentInstallation().getObjectId();
         callbackContext.success(objectId);
+      }
+    });
+  }
+
+  private void getLocation(final CallbackContext callbackContext) {
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        ParseGeoPoint location = ParseInstallation.getCurrentInstallation().getParseGeoPoint("location");
+        JSONObject obj = new JSONObject();
+        try {
+          obj.put("latitude", location.getLatitude());
+          obj.put("longitude", location.getLongitude());
+          callbackContext.success(obj);
+
+        } catch(JSONException ex) {
+          callbackContext.error(ex.toString());
+        }
+      }
+    });
+  }
+
+  private void setLocation(double lat, double lng, final CallbackContext callbackContext) {
+    ParseGeoPoint location = new ParseGeoPoint(lat, lng);
+    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+    installation.put("location", location);
+    installation.saveInBackground(new SaveCallback() {
+      @Override
+      public void done(ParseException ex) {
+        if (null != ex) {
+          Log.e(LOGTAG, ex.toString());
+          callbackContext.error(ex.toString());
+        } else {
+          Log.d(LOGTAG, "Location saved to Installation.");
+          callbackContext.success();
+        }
+      }
+    });
+  }
+
+  private void getDeviceToken(final CallbackContext callbackContext) {
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        String deviceToken = ParseInstallation.getCurrentInstallation().getString("deviceToken");
+        callbackContext.success(deviceToken);
       }
     });
   }

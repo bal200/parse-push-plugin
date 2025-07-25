@@ -45,7 +45,7 @@ var ParsePushPlugin = {
 	_receiveEvent: 'receivePN',
 	_customEventKey: 'event', //default key for custom events associated with each PN, set this to anything you see fit
 
-   DEBUG: false,
+   DEBUG: true,
 
    getInstallationId: function(successCb, errorCb) {
       cordova.exec(successCb, errorCb, serviceName, 'getInstallationId', []);
@@ -73,6 +73,16 @@ var ParsePushPlugin = {
 
    register: function(successCb, errorCb) {
       cordova.exec(successCb, errorCb, serviceName, 'register', []);
+   },
+
+   getLocation: function(successCb, errorCb) {
+      cordova.exec(successCb, errorCb, serviceName, 'getLocation', []);
+   },
+   setLocation: function(latitude, longitude, successCb, errorCb) {
+       cordova.exec(successCb, errorCb, serviceName, 'setLocation', [latitude, longitude]);
+   },
+   getDeviceToken: function(successCb, errorCb) {
+      cordova.exec(successCb, errorCb, serviceName, 'getDeviceToken', []);
    },
 };
 
