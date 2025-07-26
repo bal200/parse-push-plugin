@@ -84,6 +84,9 @@ var ParsePushPlugin = {
    getDeviceToken: function(successCb, errorCb) {
       cordova.exec(successCb, errorCb, serviceName, 'getDeviceToken', []);
    },
+   getDeviceTokenFromFirebase: function(successCb, errorCb) {
+      cordova.exec(successCb, errorCb, serviceName, 'getDeviceTokenFromFirebase', []);
+   },
 };
 
 //
