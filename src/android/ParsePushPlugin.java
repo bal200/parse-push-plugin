@@ -23,6 +23,11 @@ import com.parse.ParseException;
 
 import android.os.Build;
 import android.util.Log;
+import androidx.annotation.NonNull;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class ParsePushPlugin extends CordovaPlugin {
   private static final String ACTION_GET_INSTALLATION_ID = "getInstallationId";
@@ -95,6 +100,10 @@ public class ParsePushPlugin extends CordovaPlugin {
       this.getDeviceToken(callbackContext);
       return true;
     }
+    if (action.equals("getDeviceTokenFromFirebase")) {
+      this.getDeviceTokenFromFirebase(callbackContext);
+      return true;
+    }
     return false;
   }
 
@@ -156,6 +165,40 @@ public class ParsePushPlugin extends CordovaPlugin {
       public void run() {
         String deviceToken = ParseInstallation.getCurrentInstallation().getString("deviceToken");
         callbackContext.success(deviceToken);
+      }
+    });
+  }
+
+  private void getDeviceTokenFromFirebase(final CallbackContext callbackContext) {
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+          @Override
+          public void onComplete(@NonNull Task<String> task) {
+            if(!task.isSuccessful()){
+                Log.e(LOGTAG, "FAILED to get the deviceToken from Firebase.");
+                callbackContext.error("FAILED to get the deviceToken from Firebase.");
+                return;
+            }
+            String deviceToken = task.getResult();
+
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.setDeviceToken(deviceToken);
+            installation.setPushType("gcm");
+            installation.saveInBackground(new SaveCallback() {
+              @Override
+              public void done(ParseException ex) {
+                if (null != ex) {
+                  Log.e(LOGTAG, ex.toString());
+                  callbackContext.error(ex.toString());
+                } else {
+                  Log.d(LOGTAG, "Got deviceToken from Firebase and saved it to the installation.");
+                  callbackContext.success(deviceToken);
+                }
+              }
+            });
+          }
+        });
       }
     });
   }
