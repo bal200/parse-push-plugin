@@ -229,6 +229,31 @@ public class ParsePushPlugin extends CordovaPlugin {
   private CallbackContext registerPNCallbackContext = null;
 
   private void registerDeviceForPN(final CallbackContext callbackContext) {
+    /* First, we'll double check we have a deviceToken.  If not, get it from the Firebase SDK */
+    String deviceToken = ParseInstallation.getCurrentInstallation().getString("deviceToken");
+    if (deviceToken == null) {
+      FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+        @Override
+        public void onComplete(@NonNull Task<String> task) {
+          if(task.isSuccessful()){
+            String deviceToken = task.getResult();
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.setDeviceToken(deviceToken);
+            installation.setPushType("gcm");
+            installation.saveInBackground();
+            Log.d(LOGTAG, "Got deviceToken from Firebase and saved it to the installation.");
+          }else {
+            Log.e(LOGTAG, "FAILED to get the deviceToken from Firebase.");
+            callbackContext.error("FAILED to get the deviceToken from Firebase.");
+          }
+          requestNotificationPermission(callbackContext);
+        }
+      });
+    } else {
+      requestNotificationPermission(callbackContext);
+    }
+  }
+  private void requestNotificationPermission(final CallbackContext callbackContext) {
     // This is only necessary for API level >= 33 (TIRAMISU)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       if (!cordova.hasPermission(android.Manifest.permission.POST_NOTIFICATIONS)) {
