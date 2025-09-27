@@ -45,47 +45,68 @@ var ParsePushPlugin = {
 	_receiveEvent: 'receivePN',
 	_customEventKey: 'event', //default key for custom events associated with each PN, set this to anything you see fit
 
-   DEBUG: true,
+   DEBUG: false,
 
-   getInstallationId: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'getInstallationId', []);
-   },
-
-   getInstallationObjectId: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'getInstallationObjectId', []);
+   getInstallationId: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'getInstallationId', []);
+      });
    },
 
-   getSubscriptions: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'getSubscriptions', []);
+   getInstallationObjectId: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'getInstallationObjectId', []);
+      });
    },
 
-   subscribe: function(channel, successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'subscribe', [ channel ]);
+   getSubscriptions: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'getSubscriptions', []);
+      });
+   },
+   subscribe: function(channel) {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'subscribe', [channel]);
+      });
+   },
+   unsubscribe: function(channel) {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'unsubscribe', [channel]);
+      });
    },
 
-   unsubscribe: function(channel, successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'unsubscribe', [ channel ]);
-   },
-   
-   resetBadge: function(successCb, errorCb) {
-       cordova.exec(successCb, errorCb, serviceName, 'resetBadge', []);
+   resetBadge: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'resetBadge', []);
+      });
    },
 
-   register: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'register', []);
+   register: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'register', []);
+      });
    },
 
-   getLocation: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'getLocation', []);
+   getLocation: function() {
+      return new Promise((resolve, reject) => {
+        cordova.exec(resolve, reject, serviceName, 'getLocation', []);
+      });
    },
-   setLocation: function(latitude, longitude, successCb, errorCb) {
-       cordova.exec(successCb, errorCb, serviceName, 'setLocation', [latitude, longitude]);
+   setLocation: function(latitude, longitude) {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'setLocation', [latitude, longitude]);
+      });
    },
-   getDeviceToken: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'getDeviceToken', []);
+
+   getDeviceToken: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'getDeviceToken', []);
+      });
    },
-   getDeviceTokenFromFirebase: function(successCb, errorCb) {
-      cordova.exec(successCb, errorCb, serviceName, 'getDeviceTokenFromFirebase', []);
+   getDeviceTokenFromFirebase: function() {
+      return new Promise((resolve, reject) => {
+         cordova.exec(resolve, reject, serviceName, 'getDeviceTokenFromFirebase', []);
+      });
    },
 };
 

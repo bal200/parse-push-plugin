@@ -77,20 +77,25 @@ public class ParsePushApplication extends Application {
         );
       }
 
-      Log.d(LOGTAG, "Saving Installation in background");
-      //
-      // save installation. Parse.Push will need this to push to the correct device
       ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-      installation.saveInBackground(new SaveCallback() {
-        @Override
-        public void done(ParseException ex) {
-          if (null != ex) {
-            Log.e(LOGTAG, ex.toString());
-          } else {
-            Log.d(LOGTAG, "Installation saved");
+      String deviceToken = installation.getString("deviceToken");
+      if (deviceToken != null) {
+        Log.d(LOGTAG, "Saving Installation in background");
+
+        // save installation. Parse.Push will need this to push to the correct device
+        installation.saveInBackground(new SaveCallback() {
+          @Override
+          public void done(ParseException ex) {
+            if (null != ex) {
+              Log.e(LOGTAG, ex.toString());
+            } else {
+              Log.d(LOGTAG, "Installation saved");
+            }
           }
-        }
-      });
+        });
+      } else {
+        Log.w(LOGTAG, "Not saving the Installation yet, as the deviceToken is null.");
+      }
 
     } catch (ParsePushConfigException ex) {
       Log.e(LOGTAG, ex.toString());
